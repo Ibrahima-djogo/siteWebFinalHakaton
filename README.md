@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 # naissancechain-app
@@ -84,3 +85,7 @@ export default defineConfig([
 >>>>>>> 2d45a4b (Initial commit app)
 "# naissanceChainEnregistrementVerification" 
 >>>>>>> sauvegarde
+=======
+# siteWebFinalHakaton
+NaissanceChain est une plateforme civic-tech innovante conçue pour moderniser l’enregistrement des naissances en Guinée grâce à une identité numérique sécurisée et vérifiable. Le projet combine accessibilité, inclusion et technologie afin de garantir à chaque enfant une existence légale dès la naissance, même dans les zones rurales.
+>>>>>>> 0c9a90c9dd378c9962a12a9cabaf0175dfd0e76e
