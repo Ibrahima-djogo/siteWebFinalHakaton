@@ -37,69 +37,69 @@ function useCounter(target: number, duration = 2000, startOnView = true) {
 
 // SVG Icons
 const IconEye = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{color: '#1A5C42'}}>
-    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
-    <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
-    <line x1="1" y1="1" x2="23" y2="23"/>
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#1A5C42' }}>
+    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+    <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+    <line x1="1" y1="1" x2="23" y2="23" />
   </svg>
 );
 
 const IconTree = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{color: "#FFFFFF"}}>
-    <path d="M17 14l-5-5-5 5"/><path d="M12 3v18"/>
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "#FFFFFF" }}>
+    <path d="M17 14l-5-5-5 5" /><path d="M12 3v18" />
   </svg>
 );
 
 const IconSpeed = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{color: '#0B3D2E'}}>
-    <path d="M12 2a10 10 0 0 1 6.56 2.44"/><path d="M2 12h3M19 12h3M12 21v-3"/>
-    <circle cx="12" cy="12" r="1"/><path d="M12 12l4-4"/>
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#0B3D2E' }}>
+    <path d="M12 2a10 10 0 0 1 6.56 2.44" /><path d="M2 12h3M19 12h3M12 21v-3" />
+    <circle cx="12" cy="12" r="1" /><path d="M12 12l4-4" />
   </svg>
 );
 
 const IconCloud = () => (
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/><line x1="4" y1="4" x2="20" y2="20"/>
+    <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" /><line x1="4" y1="4" x2="20" y2="20" />
   </svg>
 );
 
 const IconFingerprint = () => (
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10"/><path d="M5 12c0-3.866 3.134-7 7-7"/>
-    <path d="M8 12a4 4 0 0 1 8 0"/><path d="M11 12v4"/>
+    <path d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10" /><path d="M5 12c0-3.866 3.134-7 7-7" />
+    <path d="M8 12a4 4 0 0 1 8 0" /><path d="M11 12v4" />
   </svg>
 );
 
 const IconNetwork = () => (
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/>
-    <line x1="12" y1="7" x2="5" y2="17"/><line x1="12" y1="7" x2="19" y2="17"/>
+    <circle cx="12" cy="5" r="2" /><circle cx="5" cy="19" r="2" /><circle cx="19" cy="19" r="2" />
+    <line x1="12" y1="7" x2="5" y2="17" /><line x1="12" y1="7" x2="19" y2="17" />
   </svg>
 );
 
 const IconShield = () => (
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
   </svg>
 );
 
 const IconGlobe = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
-    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+    <circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" />
+    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
   </svg>
 );
 
 const IconBuilding = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="2" y="3" width="20" height="18"/><line x1="8" y1="3" x2="8" y2="21"/>
-    <line x1="16" y1="3" x2="16" y2="21"/><line x1="2" y1="12" x2="22" y2="12"/>
+    <rect x="2" y="3" width="20" height="18" /><line x1="8" y1="3" x2="8" y2="21" />
+    <line x1="16" y1="3" x2="16" y2="21" /><line x1="2" y1="12" x2="22" y2="12" />
   </svg>
 );
 
 const IconShieldSm = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
   </svg>
 );
 
@@ -107,7 +107,6 @@ export default function NaissanceChain() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { setView } = useApp();
-  const counter1 = useCounter(0, 0);
   const counter2 = useCounter(0, 0);
 
   useEffect(() => {
@@ -168,7 +167,7 @@ export default function NaissanceChain() {
           <button className="nav-btn-enregistrement hide-mobile" onClick={() => setView("enregistrement")}>
             Enregistrement
           </button>
-          
+
           <button className="nav-menu-toggle" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Menu">
             <div className={`hamburger ${mobileMenuOpen ? "active" : ""}`}>
               <span></span>
@@ -178,7 +177,7 @@ export default function NaissanceChain() {
           </button>
 
           <div className="avatar hide-mobile">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" /></svg>
           </div>
         </div>
       </nav>
@@ -200,7 +199,7 @@ export default function NaissanceChain() {
             <div className="reveal">
               <span className="badge-premium">PROJET NATIONAL · RÉPUBLIQUE DE GUINÉE</span>
               <h1 className="hero-title-premium">
-                Chaque enfant compte.<br/>
+                Chaque enfant compte.<br />
                 <span className="text-gradient">Bâtissons le registre de l'avenir.</span>
               </h1>
               <p className="hero-desc-premium">
@@ -210,7 +209,7 @@ export default function NaissanceChain() {
               <div className="btn-group-hero">
                 <button className="btn-hero-primary" onClick={() => setView("enregistrement")}>
                   Enregistrer une naissance
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12,5 19,12 12,19" /></svg>
                 </button>
                 <button className="btn-hero-secondary" onClick={() => setView("verification-portail")}>Vérifier un Acte</button>
                 <button className="btn-hero-portail" onClick={() => setView("portail")}>
@@ -260,7 +259,7 @@ export default function NaissanceChain() {
             { icon: "🎓", num: "35%", label: "Moins de chance d'accès à l'éducation", color: "green" },
             { icon: "📶", num: "100%", label: "Disponible même hors connexion", color: "white" },
             { icon: "🔐", num: "QR", label: "Vérification sécurisée par blockchain", color: "yellow" },
-          ].map((t,i) => (
+          ].map((t, i) => (
             <div key={i} className={`trust-card card-${t.color} reveal`} style={{ transitionDelay: `${i * 0.1}s` }}>
               <span className="trust-icon">{t.icon}</span>
               <div className="trust-num">{t.num}</div>
@@ -286,12 +285,12 @@ export default function NaissanceChain() {
           <div className="stat-card green reveal" style={{ transitionDelay: '0.1s' }}>
             <div className="stat-icon"><IconTree /></div>
             <div className="stat-number">40%</div>
-            <div className="stat-desc" style={{color:'rgba(255,255,255,0.85)'}}>Des zones rurales n'ont aucun accès aux registres d'état civil traditionnels.</div>
+            <div className="stat-desc" style={{ color: 'rgba(255,255,255,0.85)' }}>Des zones rurales n'ont aucun accès aux registres d'état civil traditionnels.</div>
           </div>
           <div className="stat-card yellow reveal" style={{ transitionDelay: '0.2s' }}>
             <div className="stat-icon"><IconSpeed /></div>
             <div className="stat-number">100%</div>
-            <div className="stat-desc" style={{color: '#0B3D2E'}}>Transparence et sécurité grâce à la technologie.</div>
+            <div className="stat-desc" style={{ color: '#0B3D2E' }}>Transparence et sécurité grâce à la technologie.</div>
           </div>
         </div>
       </section>
