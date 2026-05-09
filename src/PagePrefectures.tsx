@@ -8,12 +8,12 @@ export default function PagePrefectures() {
   const [sortBy, setSortBy] = useState<"enregistrements" | "couverture" | "agents">("enregistrements");
 
   const sorted = [...PREFECTURES].sort((a, b) => b[sortBy] - a[sortBy]);
-  const max = Math.max(...PREFECTURES.map((p) => p.enregistrements));
+  const max = PREFECTURES.length > 0 ? Math.max(...PREFECTURES.map((p) => p.enregistrements)) : 1;
   const selectedPref = selected ? PREFECTURES.find((p) => p.nom === selected) : null;
   const prefRecords = selected ? ENREGISTREMENTS.filter((e) => e.prefecture === selected) : [];
 
   const totalEnreg = PREFECTURES.reduce((s, p) => s + p.enregistrements, 0);
-  const avgCouverture = Math.round(PREFECTURES.reduce((s, p) => s + p.couverture, 0) / PREFECTURES.length);
+  const avgCouverture = PREFECTURES.length > 0 ? Math.round(PREFECTURES.reduce((s, p) => s + p.couverture, 0) / PREFECTURES.length) : 0;
 
   return (
     <div className="page-container full-width">

@@ -107,8 +107,8 @@ export default function NaissanceChain() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { setView } = useApp();
-  const counter1 = useCounter(12483, 2200);
-  const counter2 = useCounter(58, 1800);
+  const counter1 = useCounter(0, 0);
+  const counter2 = useCounter(0, 0);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -188,9 +188,9 @@ export default function NaissanceChain() {
         <div className="live-dot"></div>
         <span>Système actif</span>
         <span className="live-sep">·</span>
-        <span ref={counter1.ref}><strong>{counter1.count.toLocaleString('fr-FR')}</strong> naissances enregistrées</span>
+        <span>En attente de données nationales</span>
         <span className="live-sep">·</span>
-        <span>99.9% disponibilité nationale</span>
+        <span>99.9% disponibilité théorique</span>
       </div>
 
       {/* HERO */}
@@ -394,8 +394,8 @@ export default function NaissanceChain() {
           </div>
           <div className="coverage-highlights">
             {[
-              { val: "8", label: "Préfectures connectées" },
-              { val: "342", label: "Agents déployés" },
+              { val: "0", label: "Préfectures connectées" },
+              { val: "0", label: "Agents déployés" },
               { val: "24/7", label: "Monitoring continu" },
             ].map((h, i) => (
               <div key={i} className="coverage-highlight">

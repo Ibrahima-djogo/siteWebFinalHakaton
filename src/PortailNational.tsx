@@ -8,13 +8,7 @@ import PagePrefectures from "./PagePrefectures";
 import PageAgents from "./PageAgents";
 import PageParametres from "./PageParametres";
 
-const recentRecords = [
-  { niu: "59153-GU-2026", nom: "Mamadou Diallo", date: "15 janv. 2026", prefecture: "Kindia", statut: "EN ATTENTE" },
-  { niu: "59154-GU-2026", nom: "Fatoumata Camara", date: "16 janv. 2026", prefecture: "Conakry", statut: "VALIDÉ" },
-  { niu: "59155-GU-2026", nom: "Ibrahim Bah", date: "17 janv. 2026", prefecture: "Labé", statut: "VALIDÉ" },
-  { niu: "59156-GU-2026", nom: "Mariama Kouyaté", date: "18 janv. 2026", prefecture: "Kankan", statut: "EN ATTENTE" },
-  { niu: "59157-GU-2026", nom: "Oumar Sylla", date: "19 janv. 2026", prefecture: "Boké", statut: "VALIDÉ" },
-];
+const recentRecords: any[] = [];
 
 export default function PortailNational() {
   const { setView } = useApp();
@@ -113,12 +107,12 @@ export default function PortailNational() {
             <div className="kpi-grid">
               <div className="kpi-card white">
                 <div className="kpi-label">NAISSANCES ENREGISTRÉES</div>
-                <div className="kpi-value">1 200 001</div>
-                <div className="kpi-trend up">▲ +12.4% ce mois</div>
+                <div className="kpi-value">0</div>
+                <div className="kpi-trend">Système Initialisé</div>
               </div>
               <div className="kpi-card green">
                 <div className="kpi-label">CE MOIS-CI</div>
-                <div className="kpi-value">14 851</div>
+                <div className="kpi-value">0</div>
                 <div className="kpi-badge-row">
                   <span className="blockchain-dot"></span>
                   <span className="kpi-badge-text">Blockchain Active</span>
@@ -126,9 +120,9 @@ export default function PortailNational() {
               </div>
               <div className="kpi-card yellow">
                 <div className="kpi-label">COUVERTURE NATIONALE</div>
-                <div className="kpi-value">58%</div>
+                <div className="kpi-value">0%</div>
                 <div className="kpi-progress-bar">
-                  <div className="kpi-progress-fill" style={{ width: "58%" }}></div>
+                  <div className="kpi-progress-fill" style={{ width: "0%" }}></div>
                 </div>
                 <div className="kpi-progress-label">Objectif: 95% en 2028</div>
               </div>
