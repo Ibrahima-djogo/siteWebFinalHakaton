@@ -92,6 +92,7 @@
 .vp-scan-pct { position:absolute; bottom:8px; right:12px; font-size:12px; font-weight:700; color:#1A5C42; }
 .vp-scan-ok { font-size:15px; font-weight:700; color:#22c55e; }
 .vp-scan-err { font-size:15px; font-weight:700; color:#ef4444; }
+.vp-video-feed { width:100%; height:100%; object-fit:cover; position:absolute; inset:0; }
 /* UPLOAD */
 .vp-upload-zone { height:180px; border:2px dashed #D1D5DB; border-radius:12px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; cursor:pointer; background:#FAFAFA; transition:border-color .18s; position:relative; overflow:hidden; }
 .vp-upload-zone:hover { border-color:#1A5C42; }
@@ -109,9 +110,11 @@
 .vp-demo-chip { background:#F0F4F2; color:#1A5C42; border:none; padding:4px 10px; border-radius:100px; font-size:12px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; transition:background .15s; }
 .vp-demo-chip:hover { background:#D1FAE5; }
 /* BUTTONS */
-.vp-btn-green { background:#1A5C42; color:#fff; border:none; border-radius:10px; padding:11px 20px; font-size:13px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .18s; white-space:nowrap; }
-.vp-btn-green:hover:not(:disabled) { background:#0B3D2E; }
+.vp-btn-green { background:#1A5C42; color:#fff; border:none; border-radius:10px; padding:11px 20px; font-size:13px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .18s; white-space:nowrap; height:44px; display:flex; align-items:center; justify-content:center; gap:8px; width:100%; }
+.vp-btn-green:hover:not(:disabled) { background:#0B3D2E; transform:translateY(-2px); }
 .vp-btn-green:disabled { opacity:.6; cursor:not-allowed; }
+.vp-btn-yellow { background:#E8C547; color:#0B3D2E; border:none; border-radius:10px; padding:11px 20px; font-size:13px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .18s; white-space:nowrap; height:44px; display:flex; align-items:center; justify-content:center; gap:8px; width:100%; }
+.vp-btn-yellow:hover:not(:disabled) { background:#D4B33C; transform:translateY(-2px); }
 .vp-btn-outline { background:none; border:1.5px solid #1A5C42; color:#1A5C42; border-radius:10px; padding:10px 18px; font-size:13px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .18s; }
 .vp-btn-outline:hover { background:#F0F4F2; }
 /* SPIN */

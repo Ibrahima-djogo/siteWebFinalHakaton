@@ -29,6 +29,16 @@ export default function PortailVerification() {
   const [stats, setStats] = useState({ total: 0, valide: 0, attente: 0, rejete: 0 });
   const [verifHistory, setVerifHistory] = useState<{ niu: string; nom: string; time: string; org: string }[]>([]);
   const fileRef = useRef<HTMLInputElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(t => t.stop());
+      }
+    };
+  }, []);
 
   useEffect(() => {
     initStorage();
@@ -88,27 +98,52 @@ export default function PortailVerification() {
     setScanState("error");
   };
 
-  const simulateScan = (imageDataUrl?: string) => {
+  const simulateScan = async (imageDataUrl?: string) => {
     setScanMethod(imageDataUrl ? "upload" : "camera");
     setScanState("scanning");
     setScanProgress(0);
-    if (imageDataUrl) setUploadedFile(imageDataUrl);
-    let p = 0;
-    const iv = setInterval(() => {
-      p += 3;
-      setScanProgress(p);
-      if (p >= 100) {
-        clearInterval(iv);
-        const all = searchRecords("GU");
-        const found = all[Math.floor(Math.random() * all.length)];
-        if (found) {
-          setScanState("done");
-          setTimeout(() => { selectRecord(found); setScanState("idle"); setScanProgress(0); }, 600);
-        } else {
-          setScanState("error");
+    if (imageDataUrl) {
+      setUploadedFile(imageDataUrl);
+      // Fast simulation for file upload
+      let p = 0;
+      const iv = setInterval(() => {
+        p += 5;
+        setScanProgress(p);
+        if (p >= 100) {
+          clearInterval(iv);
+          const all = searchRecords("GU");
+          const found = all[Math.floor(Math.random() * all.length)];
+          if (found) { setScanState("done"); setTimeout(() => { selectRecord(found); setScanState("idle"); }, 600); }
+          else { setScanState("error"); setTimeout(() => setScanState("idle"), 2000); }
         }
+      }, 40);
+    } else {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+        streamRef.current = stream;
+        if (videoRef.current) videoRef.current.srcObject = stream;
+        
+        let p = 0;
+        const iv = setInterval(() => {
+          p += 2;
+          setScanProgress(p);
+          if (p >= 100) {
+            clearInterval(iv);
+            if (streamRef.current) {
+              streamRef.current.getTracks().forEach(t => t.stop());
+              streamRef.current = null;
+            }
+            const all = searchRecords("GU");
+            const found = all[Math.floor(Math.random() * all.length)];
+            if (found) { setScanState("done"); setTimeout(() => { selectRecord(found); setScanState("idle"); }, 600); }
+            else { setScanState("error"); setTimeout(() => setScanState("idle"), 2000); }
+          }
+        }, 40);
+      } catch (err) {
+        alert("Caméra inaccessible. Vérifiez les permissions.");
+        setScanState("idle");
       }
-    }, 40);
+    }
   };
 
   const handleManualNIU = () => {
@@ -271,6 +306,9 @@ export default function PortailVerification() {
                     <span className="vp-method-label">Caméra (Scan Live)</span>
                   </div>
                   <div className={`vp-qr-box ${scanMethod === "camera" && scanState === "scanning" ? "active" : ""} ${scanMethod === "camera" && scanState === "done" ? "done" : ""} ${scanMethod === "camera" && scanState === "error" ? "error" : ""}`}>
+                    {scanMethod === "camera" && scanState === "scanning" && (
+                      <video ref={videoRef} autoPlay playsInline className="vp-video-feed" />
+                    )}
                     <VPQRFrame />
                     {(scanMethod !== "camera" || scanState === "idle") && <p className="vp-qr-hint">Cliquez pour activer la caméra</p>}
                     {scanMethod === "camera" && scanState === "scanning" && (
@@ -283,7 +321,7 @@ export default function PortailVerification() {
                     {scanMethod === "camera" && scanState === "error" && <div className="vp-scan-err">✗ QR non reconnu</div>}
                   </div>
                   <button
-                    className="vp-btn-green"
+                    className="vp-btn-yellow"
                     onClick={() => simulateScan()}
                     disabled={scanState === "scanning"}
                   >
@@ -326,7 +364,7 @@ export default function PortailVerification() {
                     )}
                   </div>
                   <input ref={fileRef} type="file" accept="image/*" style={{ display: "none" }} onChange={handleFileUpload} />
-                  <button className="vp-btn-outline" onClick={() => fileRef.current?.click()}>
+                  <button className="vp-btn-green" onClick={() => fileRef.current?.click()}>
                     📁 Choisir un fichier
                   </button>
                 </div>
@@ -347,14 +385,6 @@ export default function PortailVerification() {
                       onKeyDown={(e) => e.key === "Enter" && handleManualNIU()}
                     />
                     <button className="vp-btn-green" onClick={handleManualNIU}>Vérifier</button>
-                  </div>
-                  <div className="vp-demos">
-                    <span className="vp-demos-label">Exemples :</span>
-                    {["59153-GU-2026", "59154-GU-2026", "59155-GU-2026"].map((n) => (
-                      <button key={n} className="vp-demo-chip" onClick={() => { setManualNIU(n); }}>
-                        {n}
-                      </button>
-                    ))}
                   </div>
                 </div>
               </div>

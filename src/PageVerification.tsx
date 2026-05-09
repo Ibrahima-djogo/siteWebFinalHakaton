@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./pages.css";
 import "./pages-content.css";
 import { ENREGISTREMENTS, AGENTS } from "./data";
@@ -9,7 +9,18 @@ export default function PageVerification() {
   const [result, setResult] = useState<Enregistrement | null | "notfound">(null);
   const [scanning, setScanning] = useState(false);
   const [scanProgress, setScanProgress] = useState(0);
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [activeMethod, setActiveMethod] = useState<"qr" | "niu" | "nom">("niu");
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(t => t.stop());
+      }
+    };
+  }, []);
 
   const handleSearch = () => {
     if (!query.trim()) return;
@@ -23,22 +34,62 @@ export default function PageVerification() {
     setResult(found ?? "notfound");
   };
 
-  const simulateScan = () => {
-    setScanning(true);
-    setScanProgress(0);
+  const startCamera = async () => {
     setResult(null);
-    const interval = setInterval(() => {
-      setScanProgress((p) => {
+    setUploadedImage(null);
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+      streamRef.current = stream;
+      if (videoRef.current) videoRef.current.srcObject = stream;
+      setScanning(true);
+      setScanProgress(0);
+
+      // Simulate detection after 3 seconds of real video feed
+      let p = 0;
+      const interval = setInterval(() => {
+        p += 2;
+        setScanProgress(p);
         if (p >= 100) {
           clearInterval(interval);
+          stopCamera();
           setScanning(false);
-          // Simulate scan finding a record
           setResult(ENREGISTREMENTS[0]);
-          return 100;
         }
-        return p + 4;
-      });
-    }, 60);
+      }, 60);
+    } catch (err) {
+      alert("Impossible d'accéder à la caméra. Veuillez vérifier les permissions.");
+      console.error(err);
+    }
+  };
+
+  const stopCamera = () => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(t => t.stop());
+      streamRef.current = null;
+    }
+  };
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      setUploadedImage(ev.target?.result as string);
+      // For file upload, we just simulate the scan without camera
+      setScanning(true);
+      setScanProgress(0);
+      let p = 0;
+      const iv = setInterval(() => {
+        p += 5;
+        setScanProgress(p);
+        if (p >= 100) {
+          clearInterval(iv);
+          setScanning(false);
+          setResult(ENREGISTREMENTS[1]);
+        }
+      }, 40);
+    };
+    reader.readAsDataURL(file);
   };
 
   const agent = result && result !== "notfound"
@@ -99,8 +150,19 @@ export default function PageVerification() {
               <div className={`qr-scanner-box ${scanning ? "scanning" : ""}`}>
                 <div className="qr-corner tl"/><div className="qr-corner tr"/>
                 <div className="qr-corner bl"/><div className="qr-corner br"/>
+                {scanning && !uploadedImage && (
+                  <video 
+                    ref={videoRef} 
+                    autoPlay 
+                    playsInline 
+                    className="qr-video-feed"
+                  />
+                )}
+                {uploadedImage && (
+                  <img src={uploadedImage} className="qr-uploaded-preview" alt="QR Upload" />
+                )}
                 {scanning && <div className="qr-scan-line" style={{ top: `${scanProgress}%` }}/>}
-                {!scanning && (
+                {!scanning && !uploadedImage && (
                   <div className="qr-placeholder">
                     <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#ccc" strokeWidth="1.5">
                       <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
@@ -119,11 +181,25 @@ export default function PageVerification() {
                   </div>
                 )}
               </div>
-              <button className="btn-scan" onClick={simulateScan} disabled={scanning}>
-                {scanning ? "Scan en cours..." : "📷 Lancer la Caméra"}
-              </button>
+              <div className="verif-actions-row">
+                <button className="btn-scan" onClick={startCamera} disabled={scanning}>
+                  {scanning ? "Scan en cours..." : "📷 Lancer la Caméra"}
+                </button>
+                <div className="btn-upload-wrapper">
+                  <input 
+                    type="file" 
+                    id="qr-upload" 
+                    accept="image/*" 
+                    onChange={handleFileUpload} 
+                    style={{ display: 'none' }} 
+                  />
+                  <label htmlFor="qr-upload" className="btn-upload-label">
+                    📁 Charger Image QR
+                  </label>
+                </div>
+              </div>
               <p className="qr-hint">
-                Compatible avec les QR codes générés par NaissanceChain mobile, les agents de terrain et les maternités partenaires.
+                Vous pouvez scanner avec votre caméra ou importer une photo/capture d'écran d'un QR code NaissanceChain.
               </p>
             </div>
           )}
@@ -142,16 +218,7 @@ export default function PageVerification() {
                 <button className="btn-search" onClick={handleSearch}>Vérifier</button>
               </div>
 
-              <div className="quick-demos">
-                <p className="quick-label">Essayer un exemple :</p>
-                <div className="quick-chips">
-                  {ENREGISTREMENTS.slice(0, 4).map((e) => (
-                    <button key={e.niu} className="quick-chip" onClick={() => { setQuery(e.niu); setResult(e); }}>
-                      {e.niu}
-                    </button>
-                  ))}
-                </div>
-              </div>
+
 
               <div className="verif-info-box">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>

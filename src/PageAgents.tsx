@@ -8,6 +8,8 @@ export default function PageAgents() {
   const [prefFilter, setPrefFilter] = useState("TOUTES");
   const [statutFilter, setStatutFilter] = useState<"TOUS" | "ACTIF" | "INACTIF">("TOUS");
   const [selected, setSelected] = useState<string | null>(null);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newAgent, setNewAgent] = useState({ nom: "", prenom: "", prefecture: "CONAKRY", grade: "Officier", tel: "", email: "" });
 
   const prefectures = ["TOUTES", ...Array.from(new Set(AGENTS.map((a) => a.prefecture)))];
   const filtered = AGENTS.filter((a) => {
@@ -38,7 +40,7 @@ export default function PageAgents() {
               <p className="page-sub-lg">Gestion et monitoring des officiers délégués sur le territoire national</p>
             </div>
           </div>
-          <button className="btn-add-agent">
+          <button className="btn-add-agent" onClick={() => setShowAddModal(true)}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             Nouvel Agent
           </button>
@@ -118,6 +120,62 @@ export default function PageAgents() {
             </div>
           ))}
         </div>
+
+        {/* MODAL AJOUT AGENT */}
+        {showAddModal && (
+          <div className="modal-overlay" onClick={() => setShowAddModal(false)}>
+            <div className="modal-content agent-form-modal" onClick={(e) => e.stopPropagation()}>
+              <div className="detail-panel-header">
+                <span className="detail-panel-title">Inscrire un Nouvel Agent</span>
+                <button className="detail-close" onClick={() => setShowAddModal(false)}>✕</button>
+              </div>
+              <div className="form-scroll">
+                <div className="form-section-title">Informations Personnelles</div>
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Prénom</label>
+                    <input type="text" placeholder="Ex: Mamadou" value={newAgent.prenom} onChange={e => setNewAgent({...newAgent, prenom: e.target.value})} />
+                  </div>
+                  <div className="form-group">
+                    <label>Nom</label>
+                    <input type="text" placeholder="Ex: Diallo" value={newAgent.nom} onChange={e => setNewAgent({...newAgent, nom: e.target.value})} />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label>Email Professionnel</label>
+                  <input type="email" placeholder="m.diallo@etatcivil.gn" value={newAgent.email} onChange={e => setNewAgent({...newAgent, email: e.target.value})} />
+                </div>
+                <div className="form-group">
+                  <label>Numéro de Téléphone</label>
+                  <input type="tel" placeholder="+224 6XX XX XX XX" value={newAgent.tel} onChange={e => setNewAgent({...newAgent, tel: e.target.value})} />
+                </div>
+
+                <div className="form-section-title" style={{marginTop: 20}}>Affectation</div>
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Préfecture</label>
+                    <select value={newAgent.prefecture} onChange={e => setNewAgent({...newAgent, prefecture: e.target.value})}>
+                      {prefectures.filter(p => p !== "TOUTES").map(p => <option key={p} value={p}>{p}</option>)}
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label>Grade / Fonction</label>
+                    <select value={newAgent.grade} onChange={e => setNewAgent({...newAgent, grade: e.target.value})}>
+                      <option>Officier d'État Civil</option>
+                      <option>Délégué Communal</option>
+                      <option>Superviseur Régional</option>
+                      <option>Administrateur IT</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div className="detail-actions">
+                <button className="btn-detail-secondary" onClick={() => setShowAddModal(false)}>Annuler</button>
+                <button className="btn-detail-primary" onClick={() => { alert("Agent inscrit avec succès (Simulation)"); setShowAddModal(false); }}>Confirmer l'Inscription</button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* MODAL DETAIL */}
         {selectedAgent && (

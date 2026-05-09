@@ -45,7 +45,7 @@ const IconEye = () => (
 );
 
 const IconTree = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{color: "rgba(255,255,255,0.7)"}}>
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{color: "#FFFFFF"}}>
     <path d="M17 14l-5-5-5 5"/><path d="M12 3v18"/>
   </svg>
 );
@@ -58,27 +58,27 @@ const IconSpeed = () => (
 );
 
 const IconCloud = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1A5C42" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/><line x1="4" y1="4" x2="20" y2="20"/>
   </svg>
 );
 
 const IconFingerprint = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1A5C42" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10"/><path d="M5 12c0-3.866 3.134-7 7-7"/>
     <path d="M8 12a4 4 0 0 1 8 0"/><path d="M11 12v4"/>
   </svg>
 );
 
 const IconNetwork = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1A5C42" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/>
     <line x1="12" y1="7" x2="5" y2="17"/><line x1="12" y1="7" x2="19" y2="17"/>
   </svg>
 );
 
 const IconShield = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1A5C42" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
   </svg>
 );
@@ -105,6 +105,7 @@ const IconShieldSm = () => (
 
 export default function NaissanceChain() {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { setView } = useApp();
   const counter1 = useCounter(12483, 2200);
   const counter2 = useCounter(58, 1800);
@@ -123,6 +124,12 @@ export default function NaissanceChain() {
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
     return () => {
       window.removeEventListener("scroll", onScroll);
       observer.disconnect();
@@ -131,26 +138,46 @@ export default function NaissanceChain() {
 
   return (
     <>
+      {/* MOBILE MENU OVERLAY */}
+      <div className={`mobile-overlay ${mobileMenuOpen ? "active" : ""}`} onClick={() => setMobileMenuOpen(false)}></div>
+
       {/* NAVBAR */}
-      <nav className="nav" style={{ boxShadow: scrolled ? "0 2px 20px rgba(0,0,0,0.08)" : "none" }}>
-        <span className="nav-logo">NaissanceChain</span>
-        <ul className="nav-links">
-          <li><a href="#impact">Impact</a></li>
-          <li><a href="#technologie">Technologie</a></li>
-          <li><a href="#parcours">Parcours</a></li>
-          <li><a href="#partenaires">Partenaires</a></li>
+      <nav className={`nav ${scrolled ? "scrolled" : ""} ${mobileMenuOpen ? "mobile-open" : ""}`}>
+        <span className="nav-logo">
+          <img src="/logo.jpg" alt="NaissanceChain Logo" className="nav-logo-img" />
+          NaissanceChain
+        </span>
+        <ul className={`nav-links ${mobileMenuOpen ? "open" : ""}`}>
+          <li><a href="#impact" onClick={() => setMobileMenuOpen(false)}>Impact</a></li>
+          <li><a href="#technologie" onClick={() => setMobileMenuOpen(false)}>Technologie</a></li>
+          <li><a href="#parcours" onClick={() => setMobileMenuOpen(false)}>Parcours</a></li>
+          <li><a href="#partenaires" onClick={() => setMobileMenuOpen(false)}>Partenaires</a></li>
+          <li className="mobile-only-action">
+            <button className="nav-btn-enregistrement" onClick={() => { setView("enregistrement"); setMobileMenuOpen(false); }}>
+              Enregistrement
+            </button>
+          </li>
         </ul>
         <div className="nav-actions">
-          <button className="nav-btn-portail" onClick={() => setView("portail")}>
-            ◆ Portail National
-          </button>
-          <button className="nav-btn-verif" onClick={() => setView("verification-portail")}>
+          <button className="nav-btn-verif hide-mobile" onClick={() => setView("verification-portail")}>
             🔍 Vérifier
           </button>
-          <button className="nav-btn-enregistrement" onClick={() => setView("enregistrement")}>
+          <button className="nav-btn-portail hide-mobile" onClick={() => setView("portail")}>
+            ◆ Portail National
+          </button>
+          <button className="nav-btn-enregistrement hide-mobile" onClick={() => setView("enregistrement")}>
             Enregistrement
           </button>
-          <div className="avatar">
+          
+          <button className="nav-menu-toggle" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Menu">
+            <div className={`hamburger ${mobileMenuOpen ? "active" : ""}`}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </button>
+
+          <div className="avatar hide-mobile">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
           </div>
         </div>
@@ -229,12 +256,12 @@ export default function NaissanceChain() {
       <section className="trust-bar reveal">
         <div className="trust-grid">
           {[
-            { icon: "👁️", num: "1.8M+", label: "Enfants sans acte de naissance en Guinée" },
-            { icon: "🎓", num: "35%", label: "Moins de chance d'accès à l'éducation" },
-            { icon: "📶", num: "100%", label: "Disponible même hors connexion" },
-            { icon: "🔐", num: "QR", label: "Vérification sécurisée par blockchain" },
+            { icon: "👁️", num: "1.8M+", label: "Enfants sans acte de naissance en Guinée", color: "white" },
+            { icon: "🎓", num: "35%", label: "Moins de chance d'accès à l'éducation", color: "green" },
+            { icon: "📶", num: "100%", label: "Disponible même hors connexion", color: "white" },
+            { icon: "🔐", num: "QR", label: "Vérification sécurisée par blockchain", color: "yellow" },
           ].map((t,i) => (
-            <div key={i} className="trust-card reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
+            <div key={i} className={`trust-card card-${t.color} reveal`} style={{ transitionDelay: `${i * 0.1}s` }}>
               <span className="trust-icon">{t.icon}</span>
               <div className="trust-num">{t.num}</div>
               <div className="trust-label">{t.label}</div>
@@ -279,15 +306,16 @@ export default function NaissanceChain() {
 
         <div className="how-timeline">
           {[
-            { n: "01", title: "Déclaration", desc: "Un agent de santé ou d'état civil enregistre la naissance via l'application mobile, même sans connexion internet.", icon: "📱" },
-            { n: "02", title: "Vérification", desc: "Les données sont vérifiées et validées par l'administration locale avant inscription sur le registre.", icon: "✅" },
-            { n: "03", title: "Identité Numérique", desc: "Un NIU unique et un QR code sécurisé sont générés et rattachés à l'acte de naissance sur la blockchain.", icon: "🆔" },
-            { n: "04", title: "Vérification Nationale", desc: "L'acte peut être vérifié instantanément par toute institution habilitée sur le territoire national.", icon: "🔍" },
+            { n: "01", title: "Déclaration", desc: "Un agent de santé ou d'état civil enregistre la naissance via l'application mobile, même sans connexion internet.", icon: "📱", color: "purple", bg: "white" },
+            { n: "02", title: "Vérification", desc: "Les données sont vérifiées et validées par l'administration locale avant inscription sur le registre.", icon: "✅", color: "green", bg: "green" },
+            { n: "03", title: "Identité Numérique", desc: "Un NIU unique et un QR code sécurisé sont générés et rattachés à l'acte de naissance sur la blockchain.", icon: "🆔", color: "violet", bg: "white" },
+            { n: "04", title: "Vérification Nationale", desc: "L'acte peut être vérifié instantanément par toute institution habilitée sur le territoire national.", icon: "🔍", color: "blue", bg: "yellow" },
           ].map((s, i) => (
-            <div key={s.n} className="how-step reveal" style={{ transitionDelay: `${i * 0.15}s` }}>
+            <div key={s.n} className={`how-step step-${s.color} bg-${s.bg} reveal`} style={{ transitionDelay: `${i * 0.15}s` }}>
               <div className="how-step-num">{s.n}</div>
-              <div className="how-step-line"></div>
-              <div className="how-step-icon">{s.icon}</div>
+              <div className="how-step-icon-wrapper">
+                <div className="how-step-icon">{s.icon}</div>
+              </div>
               <h3 className="how-step-title">{s.title}</h3>
               <p className="how-step-desc">{s.desc}</p>
             </div>
@@ -299,12 +327,12 @@ export default function NaissanceChain() {
       <section id="technologie" className="tech-section">
         <div className="tech-left">
           {[
-            { icon: <IconCloud />, name: "Mode Hors-ligne" },
-            { icon: <IconFingerprint />, name: "ID Biométrique" },
-            { icon: <IconNetwork />, name: "Sovereign Ledger" },
-            { icon: <IconShield />, name: "Encryption AES" },
-          ].map((f) => (
-            <div key={f.name} className="feature-card reveal">
+            { icon: <IconCloud />, name: "Mode Hors-ligne", color: "white" },
+            { icon: <IconFingerprint />, name: "ID Biométrique", color: "green" },
+            { icon: <IconNetwork />, name: "Sovereign Ledger", color: "white" },
+            { icon: <IconShield />, name: "Encryption AES", color: "yellow" },
+          ].map((f, i) => (
+            <div key={f.name} className={`feature-card card-${f.color} reveal`} style={{ transitionDelay: `${i * 0.1}s` }}>
               <div className="feature-icon">{f.icon}</div>
               <div className="feature-name">{f.name}</div>
             </div>
@@ -339,14 +367,14 @@ export default function NaissanceChain() {
 
         <div className="impact-grid">
           {[
-            { icon: "🎓", title: "Éducation", desc: "Accès garanti à l'inscription scolaire et aux examens nationaux." },
-            { icon: "🏥", title: "Santé", desc: "Suivi médical, vaccination et couverture sanitaire dès la naissance." },
-            { icon: "🛡️", title: "Protection", desc: "Prévention du travail des enfants, mariages forcés et trafic." },
-            { icon: "🌍", title: "Inclusion Rurale", desc: "Couverture des zones reculées grâce au mode hors-ligne." },
-            { icon: "🏛️", title: "Services Publics", desc: "Accès aux programmes sociaux, aide alimentaire et bourses." },
-            { icon: "📊", title: "Statistiques Fiables", desc: "Données démographiques précises pour la planification nationale." },
+            { icon: "🎓", title: "Éducation", desc: "Accès garanti à l'inscription scolaire et aux examens nationaux.", color: "white" },
+            { icon: "🏥", title: "Santé", desc: "Suivi médical, vaccination et couverture sanitaire dès la naissance.", color: "green" },
+            { icon: "🛡️", title: "Protection", desc: "Prévention du travail des enfants, mariages forcés et trafic.", color: "yellow" },
+            { icon: "🌍", title: "Inclusion Rurale", desc: "Couverture des zones reculées grâce au mode hors-ligne.", color: "white" },
+            { icon: "🏛️", title: "Services Publics", desc: "Accès aux programmes sociaux, aide alimentaire et bourses.", color: "green" },
+            { icon: "📊", title: "Statistiques Fiables", desc: "Données démographiques précises pour la planification nationale.", color: "yellow" },
           ].map((c, i) => (
-            <div key={i} className="impact-card reveal" style={{ transitionDelay: `${i * 0.08}s` }}>
+            <div key={i} className={`impact-card card-${c.color} reveal`} style={{ transitionDelay: `${i * 0.08}s` }}>
               <span className="impact-card-icon">{c.icon}</span>
               <h3 className="impact-card-title">{c.title}</h3>
               <p className="impact-card-desc">{c.desc}</p>
